@@ -1,0 +1,36 @@
+﻿CREATE TABLE department
+(
+    Id_Dep INT,
+    Name VARCHAR(100),
+	PRIMARY KEY (Id_Dep)
+);
+
+CREATE TABLE employee 
+(
+	Id_Emp INT,
+	department_id INT,
+	chief_id INT,
+	Name VARCHAR(100),
+	salary INT,
+	PRIMARY KEY (Id_Emp),
+	FOREIGN KEY (department_id) REFERENCES department (Id_Dep)
+);
+
+INSERT INTO department (Id_Dep, Name) 
+VALUES (1,'Depatr1');
+VALUES (2,'Depatr2');
+VALUES (3,'Depatr3');
+
+INSERT INTO employee (Id_Emp, department_id, chief_id, Name, salary) 
+VALUES (1,1,1,'Iskander',123000);
+VALUES (2,1,2,'Bota',250000);
+VALUES (3,3,1,'Guliya',100000);
+VALUES (4,2,2,'Mura',90000);
+VALUES (5,3,2,'Ivan',120000);
+VALUES (6,2,2,'Maks',10000);
+
+
+select a.*
+from   employee a
+where  a.salary = ( select max(salary) from employee b
+  where  b.department_id = a.department_id )
